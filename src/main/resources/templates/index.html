@@ -89,6 +89,7 @@
                 directionsService.route(request, function(result, status) {
                     if (status == 'OK') {
                         directionsDisplay.setDirections(result);
+                        showChargingStations(result.routes[0].overview_path);
                     } else {
                         alert('Error calculating route: ' + status);
                     }
@@ -99,6 +100,50 @@
         } else {
             alert('Geolocation is not supported by this browser.');
         }
+    }
+
+    function showChargingStations(route) {
+        var chargingStationIcon = {
+            url: 'https://maps.google.com/mapfiles/kml/shapes/gas_stations.png',
+            scaledSize: new google.maps.Size(30, 30),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(15, 15)
+        };
+
+        var chargingStations = [];
+
+        var bounds = new google.maps.LatLngBounds();
+
+        for (var i = 0; i < route.length; i++) {
+            bounds.extend(route[i]);
+        }
+
+        map.fitBounds(bounds);
+
+        var request = {
+            bounds: bounds,
+            keyword: 'electric vehicle charging station'
+        };
+
+        var placesService = new google.maps.places.PlacesService(map);
+
+        placesService.nearbySearch(request, function(results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    chargingStations.push(results[i]);
+                    createMarker(results[i], chargingStationIcon);
+                }
+            }
+        });
+    }
+
+    function createMarker(place, icon) {
+        var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location,
+            title: place.name,
+            icon: icon
+        });
     }
 </script>
 </body>
