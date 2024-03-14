@@ -142,7 +142,34 @@
             map: map,
             position: place.geometry.location,
             title: place.name,
-            icon: icon
+            icon: icon,
+            zIndex: 1  // Ensure the charging stations are on top of other markers
+        });
+
+        // Define the content of the InfoWindow
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h3 id="firstHeading" class="firstHeading">' + place.name + '</h3>' +
+            '<div id="bodyContent">' +
+            '<p><strong>Address:</strong> ' + place.vicinity + '</p>' +
+            '<p><strong>Type:</strong> Electric Vehicle Charging Station</p>' +
+            '</div>' +
+            '</div>';
+
+        // Create an InfoWindow
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        // Add event listener to show the InfoWindow on marker hover
+        marker.addListener('mouseover', function() {
+            infowindow.open(map, marker);
+        });
+
+        // Close the InfoWindow on marker mouseout
+        marker.addListener('mouseout', function() {
+            infowindow.close();
         });
     }
 </script>
