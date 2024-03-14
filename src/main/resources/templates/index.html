@@ -1,25 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map and Route Example</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZzujqTXv4v2d6l1ig866ocTTW_fl_F7g&libraries=places"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         #map {
             height: 400px;
             width: 100%;
         }
+        .container {
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-<h1>Map and Route Example</h1>
-<div id="map"></div>
-<form id="calculateRouteForm">
-    <label for="destination">Destination:</label>
-    <input type="text" id="destination" name="destination">
-    <button type="submit">Calculate Route</button>
-</form>
+<div class="container">
+    <h1>Map and Route Example</h1>
+    <div id="map"></div>
+    <form id="calculateRouteForm">
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate Route</button>
+    </form>
+</div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZzujqTXv4v2d6l1ig866ocTTW_fl_F7g&libraries=places"></script>
 <script>
     var map;
     var directionsService;
